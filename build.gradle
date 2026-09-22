@@ -371,7 +371,7 @@ project(':cruise-control') {
   artifactoryPublish.dependsOn assemble
   artifactoryPublish.dependsOn publishToMavenLocal
 
-  tasks.create(name: "copyDependantLibs", type: Copy) {
+  tasks.create(name: "copyDependantLibs", type: Sync) {
     from (configurations.testRuntimeClasspath) {
       include('log4j-slf4j2-impl*')
     }
