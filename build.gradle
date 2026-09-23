@@ -283,6 +283,7 @@ project(':cruise-control') {
 
   dependencies {
     configurations.all {
+      exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
       exclude group: 'org.slf4j', module: 'slf4j-log4j12'
       exclude group: 'log4j', module: 'log4j'
       exclude group: 'ch.qos.logback'
@@ -472,10 +473,8 @@ project(':cruise-control-metrics-reporter') {
       exclude group: 'ch.qos.logback'
     }
 
-    implementation "org.slf4j:slf4j-api:1.7.36"
+    compileOnly "org.slf4j:slf4j-api:1.7.36"
     implementation "com.yammer.metrics:metrics-core:2.2.0"
-    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.25.5"
-    implementation "org.apache.logging.log4j:log4j-core:2.25.5"
     implementation "org.apache.kafka:kafka_$scalaBinaryVersion:$kafkaVersion"
     implementation "org.apache.kafka:kafka-server:$kafkaVersion"
     implementation "org.apache.kafka:kafka-clients:$kafkaVersion"
@@ -495,6 +494,9 @@ project(':cruise-control-metrics-reporter') {
     testImplementation "org.apache.kafka:kafka-storage:$kafkaVersion"
     testImplementation 'commons-io:commons-io:2.22.0'
     testImplementation "org.testcontainers:kafka:$testcontainersVersion"
+    testRuntimeOnly "org.slf4j:slf4j-api:1.7.36"
+    testRuntimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.25.5"
+    testRuntimeOnly "org.apache.logging.log4j:log4j-core:2.25.5"
     testOutput sourceSets.test.output
   }
 
