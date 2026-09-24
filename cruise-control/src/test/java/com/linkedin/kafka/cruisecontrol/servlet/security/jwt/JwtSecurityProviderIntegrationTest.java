@@ -178,6 +178,15 @@ public class JwtSecurityProviderIntegrationTest extends CruiseControlIntegration
     assertEquals(TEST_CORS_ORIGIN, connection.getHeaderField("Access-Control-Allow-Origin"));
   }
 
+  @Test
+  public void testUnauthenticatedGetRedirectsToLogin() throws Exception {
+    HttpURLConnection connection = (HttpURLConnection) new URI(_app.serverUrl())
+        .resolve(CRUISE_CONTROL_STATE_ENDPOINT).toURL().openConnection();
+    connection.setInstanceFollowRedirects(false);
+
+    assertEquals(HttpServletResponse.SC_FOUND, connection.getResponseCode());
+  }
+
   private File createCertificate(TokenGenerator.TokenAndKeys tokenAndKeys) throws Exception {
     String subjectDN = "C=US, ST=California, L=Santa Clara, O=LinkedIn, CN=localhost";
     Provider bcProvider = new BouncyCastleProvider();
